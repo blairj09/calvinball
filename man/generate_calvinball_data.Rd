@@ -25,19 +25,17 @@ generate_calvinball_data(
 shouldn't be reproducible!)}
 }
 \value{
-A list containing six tibbles:
+A list containing four tibbles:
 \describe{
   \item{players}{Player roster with team assignments}
   \item{teams}{Team information}
   \item{games}{Game results with scores and winners}
   \item{player_stats}{Individual player game statistics}
-  \item{player_summary}{Aggregated player career statistics}
-  \item{team_records}{Team win/loss/tie records by season}
 }
 }
 \description{
 Generates a complete set of Calvinball League data including players,
-teams, games, and statistics. Each call produces different results
+teams, games, and player statistics. Each call produces different results
 (unless a seed is set), staying true to the Calvinball spirit that
 "you can't play it the same way twice!"
 }
@@ -63,7 +61,7 @@ small_league <- generate_calvinball_data(
   n_seasons = 1
 )
 
-# Reproducible generation (against the spirit of Calvinball, but useful for testing)
+# Reproducible generation (against the spirit of Calvinball, but useful!)
 data1 <- generate_calvinball_data(seed = 42)
 data2 <- generate_calvinball_data(seed = 42)
 identical(data1, data2)  # TRUE

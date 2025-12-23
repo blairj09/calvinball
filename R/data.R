@@ -22,7 +22,6 @@
 #' @format A tibble with 6 rows and 2 variables:
 #' \describe{
 #'   \item{team_id}{Unique team identifier}
-#'
 #'   \item{team_name}{Team name (e.g., "Transmogrifiers", "Time Travelers")}
 #' }
 #'
@@ -70,7 +69,7 @@
 #' Individual player performance records for each game played.
 #' Contains wonderfully absurd Calvinball-specific metrics.
 #'
-#' @format A tibble with 900 rows and 14 variables:
+#' @format A tibble with 900 rows and 15 variables:
 #' \describe{
 #'   \item{season}{Season number}
 #'   \item{game_id}{Game identifier}
@@ -83,12 +82,10 @@
 #'   \item{flag_captures}{Number of Calvinball flag captures}
 #'   \item{invisible_zones_crossed}{Invisible zones successfully navigated}
 #'   \item{spontaneous_rule_declarations}{New rules declared during the game}
-#'
 #'   \item{song_quality_score}{Quality rating of victory songs (0-10)}
 #'   \item{minutes_played}{Minutes played in the game}
 #'   \item{fouls_committed}{Fouls committed (usually just accusations)}
-#'   \item{style_points}{Style points awarded (0-100) - very important!
-#' }
+#'   \item{style_points}{Style points awarded (0-100) - very important!}
 #' }
 #'
 #' @examples
@@ -99,49 +96,3 @@
 #'
 #' @source Synthetically generated data inspired by Calvin and Hobbes
 "cb_player_stats"
-
-#' Calvinball Player Career Summary
-#'
-#' Aggregated career statistics for each player.
-#'
-#' @format A tibble with 30 rows and 9 variables:
-#' \describe{
-#'   \item{player_id}{Player identifier}
-#'   \item{games_played}{Total games played}
-#'   \item{avg_wickets}{Average wickets scored per game}
-#'   \item{total_opposite_touchdowns}{Career total opposite touchdowns}
-#'   \item{avg_style_points}{Average style points per game}
-#'   \item{total_rule_declarations}{Career total spontaneous rule declarations}
-#'   \item{avg_time_played}{Average minutes played per game}
-#'   \item{player_name}{Player name}
-#'   \item{team_id}{Current team ID}
-#' }
-#'
-#' @examples
-#' head(cb_player_summary)
-#'
-#' # Top 5 players by average style points
-#' head(cb_player_summary[order(-cb_player_summary$avg_style_points), ], 5)
-#'
-#' @source Synthetically generated data inspired by Calvin and Hobbes
-"cb_player_summary"
-
-#' Calvinball Team Records by Season
-#'
-#' Win-loss-tie records for each team in each season.
-#'
-#' @format A tibble with 18 rows and 6 variables:
-#' \describe{
-#'   \item{team_id}{Team identifier}
-#'   \item{season}{Season number}
-#'   \item{wins}{Number of wins}
-#'   \item{losses}{Number of losses}
-#'   \item{ties}{Number of ties}
-#'   \item{team_name}{Team name}
-#' }
-#'
-#' @examples
-#' cb_team_records
-#'
-#' @source Synthetically generated data inspired by Calvin and Hobbes
-"cb_team_records"

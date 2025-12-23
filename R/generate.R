@@ -1,35 +1,30 @@
 #' Generate Fresh Calvinball League Data
 #'
 #' Generates a complete set of Calvinball League data including players,
-#' teams, games, and statistics. Each call produces different results
+#' teams, games, and player statistics. Each call produces different results
 #' (unless a seed is set), staying true to the Calvinball spirit that
 #' "you can't play it the same way twice!"
 #'
 #' @param n_players Number of players to generate (default: 30)
 #' @param n_teams Number of teams (default: 6)
-#' @param n_games Number of games per season (
-#' default: 50)
+#' @param n_games Number of games per season (default: 50)
 #' @param n_seasons Number of seasons (default: 3)
 #' @param seed Optional random seed for reproducibility (though Calvinball
-#'   shouldn
-#' 't be reproducible!)
+#'   shouldn't be reproducible!)
 #'
-#' @return A list containing six tibbles:
+#' @return A list containing four tibbles:
 #' \describe{
 #'   \item{players}{Player roster with team assignments}
 #'   \item{teams}{Team information}
 #'   \item{games}{Game results with scores and winners}
 #'   \item{player_stats}{Individual player game statistics}
-#'   \item{player_summary}{Aggregated player career statistics}
-#'   \item{team_records}{Team win/loss/tie records by season}
 #' }
 #'
 #' @details
 #' The generated data includes intentionally chaotic elements:
 #' \itemize{
-#'   \item Scores can be negative (about 15
-#' % of games)
-#'   \item Some games have extreme scores in the thousands (about 10%)
+#'   \item Scores can be negative (about 15\% of games)
+#'   \item Some games have extreme scores in the thousands (about 10\%)
 #'   \item Eight different scoring systems are used randomly
 #'   \item Ties are possible
 #' }
@@ -40,13 +35,17 @@
 #' names(data)
 #'
 #' # Generate a smaller league
-#' small_league <- generate_calvinball_data(n_players = 12, n_teams = 3, n_games = 20, n_seasons = 1)
+#' small_league <- generate_calvinball_data(
+#'   n_players = 12,
+#'   n_teams = 3,
+#'   n_games = 20,
+#'   n_seasons = 1
+#' )
 #'
-#' # Reproducible generation (against the spirit of Calvinball, but useful for testing)
+#' # Reproducible generation (against the spirit of Calvinball, but useful!)
 #' data1 <- generate_calvinball_data(seed = 42)
 #' data2 <- generate_calvinball_data(seed = 42)
-#' identical(data1, data2)  
-#' # TRUE
+#' identical(data1, data2)  # TRUE
 #'
 #' @export
 generate_calvinball_data <- function(n_players = 30,
@@ -59,7 +58,7 @@ generate_calvinball_data <- function(n_players = 30,
     set.seed(seed)
   }
 
- # Generate player names
+  # Generate player names
   first_names <- c("Calvin", "Hobbes", "Susie", "Moe", "Rosalyn", "Spaceman",
                    "Stupendous", "Captain", "Commander", "Doctor", "Professor",
                    "Agent", "Sir", "Madame", "Lord", "Duke", "Baron")
@@ -143,8 +142,7 @@ generate_calvinball_data <- function(n_players = 30,
   games <- do.call(rbind, games_list)
 
   # Generate player stats
-  stats_list <- vector("list", nrow(games) * 6)  
-  # Approximate size
+  stats_list <- vector("list", nrow(games) * 6)
   stat_idx <- 1
 
   for (i in seq_len(nrow(games))) {
@@ -187,65 +185,11 @@ generate_calvinball_data <- function(n_players = 30,
 
   player_stats <- do.call(rbind, stats_list[seq_len(stat_idx - 1)])
 
-  # Player summary
-  player_summary <- do.call(rbind, lapply(split(player_stats, player_stats$player_id), function(ps) {
-    tibble::tibble(
-      player_id = ps$player_id[1],
-      games_played = nrow(ps),
-      avg_wickets = mean(ps$wickets_scored),
-      total_opposite_touchdowns = sum(ps$opposite_touchdowns),
-      avg_style_points = mean(ps$style_points),
-      total_rule_declarations = sum(ps$spontaneous_rule_declarations),
-      avg_time_played = mean(ps$minutes_played)
-    )
-  }))
-
-  player_summary <- merge(player_summary, players, by = "player_id")
-
-  # Team records
-  games_long <- rbind(
-    tibble::tibble(
-      season = games$season,
-      team_id = games$team_home,
-      home_away = "home",
-      score_for = games$score_home,
-      score_against = games$score_away
-    ),
-    tibble::tibble(
-      season = games$season,
-      team_id = games$team_away,
-      home_away = "away",
-      score_for = games$score_away,
-      score_against = games$score_home
-    )
-  )
-
-  games_long$won <- as.integer(games_long$score_for > games_long$score_against)
-  games_long$lost <- as.integer(games_long$score_for < games_long$score_against)
-  games_long$tied <- as.integer(games_long$score_for == games_long$score_against)
-
-  team_records <- do.call(rbind, lapply(
-    split(games_long, interaction(games_long$team_id, games_long$season)),
-    function(tg) {
-      tibble::tibble(
-        team_id = tg$team_id[1],
-        season = tg$season[1],
-        wins = sum(tg$won),
-        losses = sum(tg$lost),
-        ties = sum(tg$tied)
-      )
-    }
-  ))
-
-  team_records <- merge(team_records, teams, by = "team_id")
-
-  # Return all datasets
+  # Return core datasets (summary tables can be derived by users)
   list(
     players = tibble::as_tibble(players),
     teams = tibble::as_tibble(teams),
     games = tibble::as_tibble(games),
-    player_stats = tibble::as_tibble(player_stats),
-    player_summary = tibble::as_tibble(player_summary),
-    team_records = tibble::as_tibble(team_records)
+    player_stats = tibble::as_tibble(player_stats)
   )
 }

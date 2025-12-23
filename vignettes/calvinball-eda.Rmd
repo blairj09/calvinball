@@ -33,7 +33,7 @@ Get ready for an exploratory data analysis that examines:
 
 ## Loading the Data
 
-The calvinball package provides six datasets that can be loaded directly:
+The calvinball package provides four datasets that can be loaded directly:
 
 ```{r load-packages}
 library(calvinball)
@@ -44,7 +44,7 @@ library(ggplot2)
 
 ```{r load-data}
 # The datasets are loaded automatically with the package
-# cb_players, cb_teams, cb_games, cb_player_stats, cb_player_summary, cb_team_records
+# cb_players, cb_teams, cb_games, cb_player_stats
 
 # Quick overview
 cat(sprintf("📊 Dataset Overview
@@ -154,8 +154,35 @@ cb_games |>
 
 ### Win-Loss Records
 
+First, let's compute team records from the games data:
+
+```{r compute-team-records}
+# Compute team records from games
+team_records <- cb_games |>
+  # Get home team results
+  select(season, team_id = team_home, score_for = score_home, score_against = score_away) |>
+  bind_rows(
+    # Get away team results
+    cb_games |>
+      select(season, team_id = team_away, score_for = score_away, score_against = score_home)
+  ) |>
+  mutate(
+    win = score_for > score_against,
+    loss = score_for < score_against,
+    tie = score_for == score_against
+  ) |>
+  group_by(team_id, season) |>
+  summarize(
+    wins = sum(win),
+    losses = sum(loss),
+    ties = sum(tie),
+    .groups = "drop"
+  ) |>
+  left_join(cb_teams, by = "team_id")
+```
+
 ```{r team-records, fig.height=6}
-team_records_plot <- cb_team_records |>
+team_records_plot <- team_records |>
   group_by(team_name) |>
   mutate(total_wins = sum(wins)) |>
   ungroup() |>
@@ -173,7 +200,7 @@ ggplot(team_records_plot, aes(x = reorder(team_name, total_wins), y = wins, fill
 ```
 
 ```{r overall-records}
-overall_records <- cb_team_records |>
+overall_records <- team_records |>
   group_by(team_id, team_name) |>
   summarise(
     total_wins = sum(wins),
@@ -219,12 +246,31 @@ ggplot(home_away_summary, aes(x = outcome, y = count, fill = outcome)) +
 
 ## Player Performance
 
+### Computing Player Summaries
+
+Let's summarize player statistics from the individual game data:
+
+```{r compute-player-summary}
+player_summary <- cb_player_stats |>
+  group_by(player_id) |>
+  summarize(
+    games_played = n(),
+    avg_wickets = mean(wickets_scored),
+    avg_opposite_touchdowns = mean(opposite_touchdowns),
+    avg_style_points = mean(style_points),
+    total_rule_declarations = sum(spontaneous_rule_declarations),
+    avg_time_played = mean(minutes_played),
+    .groups = "drop"
+  ) |>
+  left_join(cb_players, by = "player_id")
+```
+
 ### Style Points Leaders
 
 In Calvinball, style matters as much as substance!
 
 ```{r style-leaders}
-top_style <- cb_player_summary |>
+top_style <- player_summary |>
   arrange(desc(avg_style_points)) |>
   head(10) |>
   left_join(cb_teams, by = "team_id")
@@ -254,7 +300,7 @@ top_style |>
 ### Wickets and Performance Metrics
 
 ```{r wickets-analysis}
-cb_player_summary |>
+player_summary |>
   ggplot(aes(x = avg_wickets, y = avg_style_points)) +
   geom_point(alpha = 0.6, size = 3, color = "darkblue") +
   geom_smooth(method = "lm", se = TRUE, color = "red", linetype = "dashed") +
@@ -270,7 +316,7 @@ cb_player_summary |>
 Spontaneous rule declarations are a cornerstone of Calvinball strategy!
 
 ```{r rule-declarations}
-top_declarers <- cb_player_summary |>
+top_declarers <- player_summary |>
   arrange(desc(total_rule_declarations)) |>
   head(10) |>
   left_join(cb_teams, by = "team_id")
@@ -287,7 +333,7 @@ top_declarers |>
 Let's create a versatility metric combining multiple stats:
 
 ```{r versatility, fig.height=7}
-player_versatility <- cb_player_summary |>
+player_versatility <- player_summary |>
   left_join(cb_teams, by = "team_id") |>
   mutate(
     # Normalize each metric to 0-1 scale
@@ -346,7 +392,7 @@ small_league$games
 
 4. **COMPETITIVE BALANCE!** The league shows good parity, with win percentages ranging from `r round(min(overall_records$win_pct), 3)` to `r round(max(overall_records$win_pct), 3)`. Anyone can win!
 
-5. **CREATIVE GENIUS!** Players average `r round(mean(cb_player_summary$total_rule_declarations, na.rm = TRUE), 1)` spontaneous rule declarations over their careers, demonstrating the inventive spirit of the game.
+5. **CREATIVE GENIUS!** Players average `r round(mean(player_summary$total_rule_declarations, na.rm = TRUE), 1)` spontaneous rule declarations over their careers, demonstrating the inventive spirit of the game.
 
 ---
 

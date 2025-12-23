@@ -5,7 +5,7 @@
 \alias{cb_player_stats}
 \title{Calvinball Player Game Statistics}
 \format{
-A tibble with 900 rows and 14 variables:
+A tibble with 900 rows and 15 variables:
 \describe{
   \item{season}{Season number}
   \item{game_id}{Game identifier}

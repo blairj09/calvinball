@@ -13,3 +13,6 @@
 ^styles\.css$
 ^img$
 ^posit-assistant-experiments\.Rproj$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

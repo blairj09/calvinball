@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/blairj09/calvinball/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/blairj09/calvinball/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 > "The only permanent rule is that you can't play it the same way twice!" - Calvin
@@ -21,7 +22,7 @@ pak::pak("blairj09/calvinball")
 ```r
 library(calvinball)
 
-# Six datasets are available immediately
+# Four datasets are available immediately
 head(cb_players)
 head(cb_games)
 
@@ -31,7 +32,7 @@ my_league <- generate_calvinball_data(n_players = 20, n_teams = 4, n_seasons = 2
 
 ## Datasets
 
-The package includes six pre-generated datasets:
+The package includes four pre-generated datasets:
 
 | Dataset | Description | Rows |
 |---------|-------------|------|
@@ -39,13 +40,11 @@ The package includes six pre-generated datasets:
 | `cb_teams` | Team information | 6 |
 | `cb_games` | Game results across 3 seasons | 150 |
 | `cb_player_stats` | Individual player game statistics | 900 |
-| `cb_player_summary` | Aggregated player career statistics | 30 |
-| `cb_team_records` | Team win/loss/tie records by season | 18 |
 
 ## Calvinball Statistics
 
 The dataset includes wonderfully absurd performance metrics true to the spirit of Calvinball:
-
+ 
 | Metric | Description |
 |--------|-------------|
 | `wickets_scored` | Because why not cricket terminology? |
@@ -74,12 +73,13 @@ library(calvinball)
 library(dplyr)
 library(ggplot2)
 
-# Who has the most style points?
-cb_player_summary |>
+# Who has the most style points on average?
+cb_player_stats |>
+  group_by(player_id) |>
+  summarize(avg_style_points = mean(style_points)) |>
+  left_join(cb_players, by = "player_id") |>
   arrange(desc(avg_style_points)) |>
-  head(5) |>
-  left_join(cb_teams, by = "team_id") |>
-  select(player_name, team_name, avg_style_points)
+  head(5)
 
 # Score distribution
 cb_games |>

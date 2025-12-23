@@ -47,6 +47,10 @@ h1, h2, h3, h4, h5, h6,
 h1, .h1 {
   font-size: 3rem !important;
   color: #2C3E50 !important;
+}
+
+/* Only apply fancy h1 styling to article/vignette pages, not the home page */
+article h1, .vignette h1 {
   text-align: center;
   padding: 1rem;
   background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%);
@@ -56,6 +60,16 @@ h1, .h1 {
   transform: rotate(-1deg);
   margin-bottom: 2rem !important;
   border-radius: 10px;
+}
+
+/* Home page title - don't cover the logo */
+.page-header h1,
+.template-home h1 {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  text-align: left !important;
 }
 
 h2, .h2 {

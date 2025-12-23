@@ -4,9 +4,10 @@
 > twice!” - Calvin
 
 **calvinball** provides a synthetic sports dataset inspired by
-Calvinball, the legendary game from Bill Watterson’s *Calvin and Hobbes*
-comic strip. The package is designed to be a fun, nostalgic dataset for
-teaching data exploration and EDA techniques.
+[Calvinball](https://calvinandhobbes.fandom.com/wiki/Calvinball), the
+legendary game from Bill Watterson’s *Calvin and Hobbes* comic strip.
+The package is designed to be a fun, nostalgic dataset for teaching data
+exploration and EDA techniques.
 
 ## Installation
 

@@ -1,0 +1,672 @@
+---
+title: "The Score is still Q to 12"
+subtitle: "Analyzing the Most Chaotic Sport in the Universe"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The Score is still Q to 12}
+
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  warning = FALSE,
+  message = FALSE
+)
+
+# Comic book color palette
+comic_colors <- c("#FF6B6B", "#4ECDC4", "#FFD93D", "#6C5CE7", 
+                  "#A8E6CF", "#FF8B94", "#95E1D3", "#F38181")
+```
+
+<style>
+/* Import comic fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Permanent+Marker&display=swap');
+
+/* Apply comic styling to vignette */
+body {
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif !important;
+  background-color: #FFF9E6;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Bangers', cursive !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #E74C3C;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%);
+  border: 4px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  color: #2C3E50 !important;
+}
+
+h2 {
+  color: #3498DB !important;
+  border-bottom: 4px solid #000;
+  padding-bottom: 0.5rem;
+}
+
+h2::before {
+  content: "★ ";
+  color: #FFD93D;
+}
+
+h3 {
+  color: #E67E22 !important;
+  border-left: 6px solid #E67E22;
+  padding-left: 12px;
+}
+
+/* Speech bubble blockquotes */
+blockquote {
+  background: #FFE66D !important;
+  border: 3px solid #000 !important;
+  border-radius: 20px !important;
+  padding: 1.2rem !important;
+  margin: 1.5rem 1rem 1.5rem 2rem !important;
+  font-style: italic;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+blockquote::before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 15px;
+  width: 0;
+  height: 0;
+  border-right: 15px solid #000;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+blockquote::after {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 18px;
+  width: 0;
+  height: 0;
+  border-right: 10px solid #FFE66D;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+/* Code blocks - comic border wrapper only, preserve readability */
+div.sourceCode {
+  border: 3px solid #000 !important;
+  border-radius: 8px !important;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  margin: 1rem 0 !important;
+  overflow: hidden;
+}
+
+/* Reset pre inside sourceCode to not double-border */
+div.sourceCode pre {
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* Ensure code is readable - don't mess with syntax highlighting */
+pre, code {
+  font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, monospace !important;
+}
+
+/* Inline code - subtle styling */
+:not(pre) > code {
+  background-color: #f0f0f0 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  border: 1px solid #ddd !important;
+}
+
+/* Comic callout boxes */
+.callout-kapow {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%);
+  border: 4px solid #000;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+.callout-kapow h4 {
+  font-family: 'Bangers', cursive !important;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #000 !important;
+  text-shadow: 2px 2px 0 #fff;
+  margin-bottom: 1rem;
+}
+
+.callout-zap {
+  background: #A8E6CF;
+  border: 4px solid #000;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.callout-pow {
+  background: #95E1D3;
+  border: 4px solid #000;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* Tables with comic style */
+table {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  margin: 1rem auto;
+}
+
+thead {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%) !important;
+  font-family: 'Bangers', cursive !important;
+}
+
+th, td {
+  border: 2px solid #000 !important;
+  padding: 10px !important;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #FFF9E6;
+}
+
+tbody tr:hover {
+  background-color: #FFE66D;
+}
+
+/* Images with comic borders - exclude logos */
+img:not([src*="logo"]):not([alt*="logo"]) {
+  border: 4px solid #000;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  background: white;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+/* Ensure logo is not styled */
+img[src*="logo"], img[alt*="logo"] {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Strong and emphasis */
+strong {
+  color: #E74C3C;
+}
+
+em {
+  color: #3498DB;
+}
+
+/* Horizontal rule */
+hr {
+  border: none;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #000 0px,
+    #000 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  margin: 2rem 0;
+}
+
+/* Comic emphasis spans */
+.kapow {
+  display: inline-block;
+  background: #FFD93D;
+  border: 3px solid #000;
+  padding: 3px 12px;
+  transform: rotate(-2deg);
+  font-family: 'Bangers', cursive;
+  font-size: 1.1rem;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.zap {
+  display: inline-block;
+  background: #4ECDC4;
+  border: 3px solid #000;
+  padding: 3px 12px;
+  transform: rotate(1deg);
+  font-family: 'Bangers', cursive;
+  font-size: 1.1rem;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* List styling */
+ul li::marker {
+  color: #E74C3C;
+  font-size: 1.2em;
+}
+</style>
+
+> "The only permanent rule is that you can't play it the same way twice!" - Calvin
+
+Welcome to the first comprehensive analysis of the **Calvinball League**, where chaos meets competition and rules are made up on the spot!
+
+<div class="callout-kapow">
+<h4>⚡ KAPOW! ⚡</h4>
+
+Get ready for an exploratory data analysis that examines:
+
+- 🎭 Player performance metrics (including the all-important *style points*!)
+- 🏆 Team dynamics and competitive balance
+- 🎲 The beautifully unpredictable nature of the game
+- 📊 Statistical patterns in pure chaos
+
+*Warning: Traditional sports analytics may not apply here!*
+</div>
+
+## Loading the Data
+
+The calvinball package provides four datasets that can be loaded directly:
+
+```{r load-packages}
+library(calvinball)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# Set a comic-inspired theme
+theme_set(theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16, color = "#E74C3C"),
+    plot.subtitle = element_text(color = "#666", face = "italic"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(fill = NA, color = "#000", linewidth = 1.5),
+    axis.title = element_text(face = "bold"),
+    legend.position = "bottom"
+  ))
+```
+
+```{r load-data}
+# The datasets are loaded automatically with the package
+# cb_players, cb_teams, cb_games, cb_player_stats
+
+# Quick overview
+cat(sprintf("📊 Dataset Overview
+
+• %d players across %d teams
+• %d games played over %d seasons
+• %d individual performance records
+
+The Calvinball League data is ready for analysis!",
+  nrow(cb_players),
+  nrow(cb_teams),
+  nrow(cb_games),
+  length(unique(cb_games$season)),
+  nrow(cb_player_stats)
+))
+```
+
+## League Structure
+
+### Teams
+
+```{r teams-overview}
+teams_with_size <- cb_players |>
+  count(team_id, name = "roster_size") |>
+  left_join(cb_teams, by = "team_id")
+
+teams_with_size |>
+  select(team_name, roster_size) |>
+  knitr::kable(col.names = c("Team Name", "Roster Size"))
+```
+
+### Player Distribution
+
+```{r player-distribution, fig.height=4}
+cb_players |>
+  left_join(cb_teams, by = "team_id") |>
+  count(team_name) |>
+  ggplot(aes(x = reorder(team_name, n), y = n, fill = team_name)) +
+  geom_col(show.legend = FALSE, color = "#000", linewidth = 1) +
+  geom_text(aes(label = n), hjust = -0.3, fontface = "bold") +
+  coord_flip() +
+  labs(title = "Team Roster Sizes",
+       subtitle = "Players are distributed across all teams",
+       x = NULL,
+       y = "Number of Players") +
+  scale_fill_manual(values = comic_colors) +
+  ylim(0, max(table(cb_players$team_id)) + 1)
+```
+
+## Game Analysis
+
+### Scoring Chaos
+
+<div class="callout-zap">
+**⚡ ZAP!** One of the hallmarks of Calvinball is its completely unpredictable scoring system! Scores can range from deeply negative to astronomical!
+</div>
+
+```{r score-distribution}
+games_long <- cb_games |>
+  select(game_id, season, score_home, score_away) |>
+  pivot_longer(cols = c(score_home, score_away),
+               names_to = "location",
+               values_to = "score")
+
+ggplot(games_long, aes(x = score)) +
+  geom_histogram(bins = 50, fill = "#3498DB", alpha = 0.8, color = "#000") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "#E74C3C", linewidth = 1.5) +
+  labs(title = "Distribution of Game Scores",
+       subtitle = "Note the negative scores and extreme outliers - pure Calvinball!",
+       x = "Score",
+       y = "Frequency")
+```
+
+```{r score-summary}
+score_stats <- games_long |>
+  summarise(
+    Minimum = min(score),
+    Median = median(score),
+    Mean = round(mean(score), 1),
+    Maximum = max(score),
+    `Std Dev` = round(sd(score), 1)
+  )
+
+knitr::kable(score_stats, caption = "📊 Score Summary Statistics")
+```
+
+### Scoring Types
+
+In true Calvinball fashion, the scoring system changes from game to game!
+
+```{r scoring-types}
+cb_games |>
+  count(scoring_type) |>
+  ggplot(aes(x = reorder(scoring_type, n), y = n, fill = scoring_type)) +
+  geom_col(show.legend = FALSE, color = "#000", linewidth = 1) +
+  geom_text(aes(label = n), hjust = -0.3, size = 3.5, fontface = "bold") +
+  coord_flip() +
+  labs(title = "Frequency of Scoring Types",
+       subtitle = "Because consistency is boring!",
+       x = NULL,
+       y = "Number of Games") +
+  scale_fill_manual(values = comic_colors) +
+  ylim(0, max(table(cb_games$scoring_type)) + 3)
+```
+
+## Team Performance
+
+### Win-Loss Records
+
+First, let's compute team records from the games data:
+
+```{r compute-team-records}
+# Compute team records from games
+team_records <- cb_games |>
+  select(season, team_id = team_home, score_for = score_home, score_against = score_away) |>
+  bind_rows(
+    cb_games |>
+      select(season, team_id = team_away, score_for = score_away, score_against = score_home)
+  ) |>
+  mutate(
+    win = score_for > score_against,
+    loss = score_for < score_against,
+    tie = score_for == score_against
+  ) |>
+  group_by(team_id, season) |>
+  summarize(
+    wins = sum(win),
+    losses = sum(loss),
+    ties = sum(tie),
+    .groups = "drop"
+  ) |>
+  left_join(cb_teams, by = "team_id")
+```
+
+```{r team-records, fig.height=6}
+team_records_plot <- team_records |>
+  group_by(team_name) |>
+  mutate(total_wins = sum(wins)) |>
+  ungroup() |>
+  mutate(season = factor(season))
+
+ggplot(team_records_plot, aes(x = reorder(team_name, total_wins), y = wins, fill = season)) +
+  geom_col(position = "dodge", color = "#000", linewidth = 0.5) +
+  coord_flip() +
+  labs(title = "Team Wins by Season",
+       subtitle = "How do teams stack up across seasons?",
+       x = NULL,
+       y = "Wins",
+       fill = "Season") +
+  scale_fill_manual(values = c("#FF6B6B", "#4ECDC4", "#FFD93D"))
+```
+
+```{r overall-records}
+overall_records <- team_records |>
+  group_by(team_id, team_name) |>
+  summarise(
+    total_wins = sum(wins),
+    total_losses = sum(losses),
+    total_ties = sum(ties),
+    .groups = "drop"
+  ) |>
+  mutate(
+    total_games = total_wins + total_losses + total_ties,
+    win_pct = round(total_wins / total_games, 3)
+  ) |>
+  arrange(desc(win_pct))
+
+overall_records |>
+  select(team_name, total_wins, total_losses, total_ties, win_pct) |>
+  knitr::kable(col.names = c("Team", "Wins", "Losses", "Ties", "Win %"),
+               caption = "🏆 Overall Team Records (All Seasons)")
+```
+
+### Home vs Away Performance
+
+```{r home-away}
+home_away_summary <- cb_games |>
+  summarise(
+    `Home Wins` = sum(score_home > score_away),
+    `Away Wins` = sum(score_away > score_home),
+    `Ties` = sum(score_home == score_away)
+  ) |>
+  pivot_longer(everything(), names_to = "outcome", values_to = "count")
+
+ggplot(home_away_summary, aes(x = outcome, y = count, fill = outcome)) +
+  geom_col(show.legend = FALSE, color = "#000", linewidth = 1) +
+  geom_text(aes(label = count), vjust = -0.5, size = 6, fontface = "bold") +
+  labs(title = "Home vs Away Performance",
+       subtitle = "Surprisingly, there might be a home field advantage!",
+       x = NULL,
+       y = "Number of Games") +
+  scale_fill_manual(values = c("Home Wins" = "#27AE60",
+                                "Away Wins" = "#E74C3C",
+                                "Ties" = "#95A5A6")) +
+  ylim(0, max(home_away_summary$count) + 10)
+```
+
+## Player Performance
+
+### Computing Player Summaries
+
+Let's summarize player statistics from the individual game data:
+
+```{r compute-player-summary}
+player_summary <- cb_player_stats |>
+  group_by(player_id) |>
+  summarize(
+    games_played = n(),
+    avg_wickets = mean(wickets_scored),
+    avg_opposite_touchdowns = mean(opposite_touchdowns),
+    avg_style_points = mean(style_points),
+    total_rule_declarations = sum(spontaneous_rule_declarations),
+    avg_time_played = mean(minutes_played),
+    .groups = "drop"
+  ) |>
+  left_join(cb_players, by = "player_id")
+```
+
+### Style Points Leaders
+
+<div class="callout-pow">
+**⭐ STYLE MATTERS!** In Calvinball, style is just as important as substance. These are the players with the most panache!
+</div>
+
+```{r style-leaders}
+top_style <- player_summary |>
+  arrange(desc(avg_style_points)) |>
+  head(10) |>
+  left_join(cb_teams, by = "team_id")
+
+top_style |>
+  select(player_name, team_name, games_played, avg_style_points) |>
+  mutate(avg_style_points = round(avg_style_points, 2)) |>
+  knitr::kable(col.names = c("Player", "Team", "Games", "Avg Style Points"),
+               caption = "⭐ Top 10 Players by Average Style Points")
+```
+
+```{r style-plot, fig.height=6}
+top_style |>
+  ggplot(aes(x = reorder(player_name, avg_style_points),
+             y = avg_style_points,
+             fill = team_name)) +
+  geom_col(color = "#000", linewidth = 1) +
+  coord_flip() +
+  labs(title = "Top 10 Players by Average Style Points",
+       subtitle = "Flair and panache are everything in Calvinball!",
+       x = NULL,
+       y = "Average Style Points",
+       fill = "Team") +
+  scale_fill_manual(values = comic_colors)
+```
+
+### Wickets and Performance Metrics
+
+```{r wickets-analysis}
+player_summary |>
+  ggplot(aes(x = avg_wickets, y = avg_style_points)) +
+  geom_point(alpha = 0.7, size = 4, color = "#3498DB") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E74C3C", linetype = "dashed", linewidth = 1.5) +
+  labs(title = "Style Points vs Wickets Scored",
+       subtitle = "Is there a relationship between technical skill and style?",
+       x = "Average Wickets Scored",
+       y = "Average Style Points")
+```
+
+### Rule Declarations
+
+<div class="callout-zap">
+**🎨 CREATIVE GENIUS!** Spontaneous rule declarations are a cornerstone of Calvinball strategy! The most innovative players make up the best rules!
+</div>
+
+```{r rule-declarations}
+top_declarers <- player_summary |>
+  arrange(desc(total_rule_declarations)) |>
+  head(10) |>
+  left_join(cb_teams, by = "team_id")
+
+top_declarers |>
+  select(player_name, team_name, total_rule_declarations, games_played) |>
+  knitr::kable(col.names = c("Player", "Team", "Total Declarations", "Games Played"),
+               caption = "🎨 Top Rule Declarers - The Most Creative Minds!")
+```
+
+## Advanced Metrics
+
+### Player Versatility Score
+
+Let's create a versatility metric combining multiple stats:
+
+```{r versatility, fig.height=7}
+player_versatility <- player_summary |>
+  left_join(cb_teams, by = "team_id") |>
+  mutate(
+    # Normalize each metric to 0-1 scale
+    style_norm = (avg_style_points - min(avg_style_points)) /
+                 (max(avg_style_points) - min(avg_style_points)),
+    wickets_norm = (avg_wickets - min(avg_wickets)) /
+                   (max(avg_wickets) - min(avg_wickets)),
+    declarations_norm = (total_rule_declarations - min(total_rule_declarations)) /
+                        (max(total_rule_declarations) - min(total_rule_declarations)),
+    # Versatility score
+    versatility = (style_norm + wickets_norm + declarations_norm) / 3
+  ) |>
+  arrange(desc(versatility)) |>
+  head(15)
+
+player_versatility |>
+  ggplot(aes(x = reorder(player_name, versatility),
+             y = versatility,
+             fill = team_name)) +
+  geom_col(color = "#000", linewidth = 1) +
+  coord_flip() +
+  labs(title = "Top 15 Most Versatile Players",
+       subtitle = "Combining style, wickets, and rule declarations",
+       x = NULL,
+       y = "Versatility Score",
+       fill = "Team") +
+  scale_fill_manual(values = comic_colors)
+```
+
+## Generating Fresh Data
+
+If you want to generate your own Calvinball data with different parameters, use the `generate_calvinball_data()` function:
+
+```{r generate-example, eval=FALSE}
+# Generate a smaller league
+small_league <- generate_calvinball_data(
+  n_players = 12,
+  n_teams = 3,
+  n_games = 20,
+  n_seasons = 1
+)
+
+# Access the datasets
+small_league$players
+small_league$games
+```
+
+---
+
+<div class="callout-kapow">
+<h4>💥 BAM! Key Findings 💥</h4>
+
+**1. SCORING CHAOS!** Calvinball lives up to its reputation with scores ranging from `r min(games_long$score)` to `r format(max(games_long$score), big.mark = ",")`, with a standard deviation of `r format(round(sd(games_long$score), 1), big.mark = ",")`. That's WILD!
+
+**2. HOME FIELD ADVANTAGE?!** Despite the chaotic nature of the game, there appears to be a slight home field advantage, with home teams winning approximately `r round(100 * mean(cb_games$score_home > cb_games$score_away), 1)`% of games. Who knew?
+
+**3. STYLE MATTERS!** The top performers in style points show considerable variability, suggesting that multiple approaches to Calvinball can be successful.
+
+**4. COMPETITIVE BALANCE!** The league shows good parity, with win percentages ranging from `r round(min(overall_records$win_pct), 3)` to `r round(max(overall_records$win_pct), 3)`. Anyone can win!
+
+**5. CREATIVE GENIUS!** Players average `r round(mean(player_summary$total_rule_declarations, na.rm = TRUE), 1)` spontaneous rule declarations over their careers, demonstrating the inventive spirit of the game.
+</div>
+
+---
+
+<center>
+*"Sometimes I think the surest sign that intelligent life exists elsewhere in the universe is that none of it has tried to contact us."*
+
+<span class="kapow">🏴 The Score is STILL Q to 12! 🏴</span>
+</center>

@@ -1,0 +1,53 @@
+url: https://blairj09.github.io/calvinball/
+
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#E74C3C"
+    secondary: "#FFD93D"
+    success: "#27AE60"
+    info: "#3498DB"
+    warning: "#F39C12"
+    danger: "#C0392B"
+  includes:
+    in_header: |
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+home:
+  title: "calvinball"
+  description: "Synthetic sports data inspired by Calvin and Hobbes"
+
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search, github]
+  components:
+    articles:
+      text: Articles
+      menu:
+        - text: "Exploratory Data Analysis"
+          href: articles/calvinball-eda.html
+
+reference:
+  - title: "Datasets"
+    desc: "Pre-generated Calvinball League data"
+    contents:
+      - cb_players
+      - cb_teams
+      - cb_games
+      - cb_player_stats
+  - title: "Data Generation"
+    desc: "Generate fresh Calvinball data"
+    contents:
+      - generate_calvinball_data
+
+authors:
+  James Blair:
+    href: https://github.com/blairj09
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with

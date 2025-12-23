@@ -1,42 +1,64 @@
-# Calvinball League Data 🏴
+# calvinball <img src="man/figures/logo.webp" align="right" height="139" alt="calvinball logo" />
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+<!-- badges: end -->
 
 > "The only permanent rule is that you can't play it the same way twice!" - Calvin
 
-A synthetic sports dataset inspired by **Calvinball**, the legendary game from Bill Watterson's *Calvin and Hobbes* comic strip. This project is designed to be a fun, nostalgic dataset for illustrating data exploration and EDA techniques.
+**calvinball** provides a synthetic sports dataset inspired by Calvinball, the legendary game from Bill Watterson's *Calvin and Hobbes* comic strip. The package is designed to be a fun, nostalgic dataset for teaching data exploration and EDA techniques.
 
-## 📊 What's Included
+## Installation
+You can install the development version of calvinball from GitHub:
 
-### Data Files (`data/`)
+```r
+# install.packages("pak")
+pak::pak("jamesblair/calvinball")
+```
 
-| File | Description |
-|------|-------------|
-| `players.csv` | Player roster (30 players with creative names) |
-| `teams.csv` | Team information (6 teams) |
-| `games.csv` | Game results across 3 seasons (150 games) |
-| `player_stats.csv` | Individual game performance records (900 rows) |
-| `players_summary.csv` | Aggregated player career statistics |
-| `team_records.csv` | Team win/loss/tie records by season |
+## Quick Start
 
-### Analysis
+```r
+library(calvinball)
 
-- **`eda.qmd`** - A comprehensive exploratory data analysis document with comic book-inspired styling
-- **`styles.css`** - Custom CSS for the comic book theme (uses Bangers, Comic Neue, and Permanent Marker fonts)
+# Six datasets are available immediately
+head(cb_players)
+head(cb_games)
 
-## 🎮 Calvinball Statistics
+# Generate fresh data with custom parameters
+my_league <- generate_calvinball_data(n_players = 20, n_teams = 4, n_seasons = 2)
+```
+
+## Datasets
+
+The package includes six pre-generated datasets:
+
+| Dataset | Description | Rows |
+|---------|-------------|------|
+| `cb_players` | Player roster with team assignments | 30 |
+| `cb_teams` | Team information | 6 |
+| `cb_games` | Game results across 3 seasons | 150 |
+| `cb_player_stats` | Individual player game statistics | 900 |
+| `cb_player_summary` | Aggregated player career statistics | 30 |
+| `cb_team_records` | Team win/loss/tie records by season | 18 |
+
+## Calvinball Statistics
 
 The dataset includes wonderfully absurd performance metrics true to the spirit of Calvinball:
 
-- **Wickets Scored** - Because why not cricket terminology?
-- **Opposite Touchdowns** - Can be negative!
-- **Time Reversal Bonus** - For when you declare a time-reversal zone
-- **Mask Points** - Masks are mandatory equipment
-- **Flag Captures** - The Calvinball flag is sacred
-- **Invisible Zones Crossed** - Only the truly skilled can navigate these
-- **Spontaneous Rule Declarations** - The heart of Calvinball strategy
-- **Song Quality Score** - Victory songs are judged harshly
-- **Style Points** - Because *flair matters*
+| Metric | Description |
+|--------|-------------|
+| `wickets_scored` | Because why not cricket terminology? |
+| `opposite_touchdowns` | Can be negative! |
+| `time_reversal_bonus` | For when you declare a time-reversal zone |
+| `mask_points` | Masks are mandatory equipment |
+| `flag_captures` | The Calvinball flag is sacred |
+| `invisible_zones_crossed` | Only the truly skilled can navigate these |
+| `spontaneous_rule_declarations` | The heart of Calvinball strategy |
+| `song_quality_score` | Victory songs are judged harshly |
+| `style_points` | Because *flair matters* |
 
-## 🎲 Data Characteristics
+## Data Characteristics
 
 The data intentionally includes chaotic elements perfect for teaching EDA:
 
@@ -45,50 +67,67 @@ The data intentionally includes chaotic elements perfect for teaching EDA:
 - **Ties are possible**: Just like in real Calvinball (the score is still Q to 12!)
 - **Extreme outliers**: ~10% of games have scores in the thousands
 
-## 🚀 Getting Started
-
-### Regenerate the Data
+## Example Analysis
 
 ```r
-source("data/generate-data.R")
+library(calvinball)
+library(dplyr)
+library(ggplot2)
+
+# Who has the most style points?
+cb_player_summary |>
+  arrange(desc(avg_style_points)) |>
+  head(5) |>
+  left_join(cb_teams, by = "team_id") |>
+  select(player_name, team_name, avg_style_points)
+
+# Score distribution
+cb_games |>
+  ggplot(aes(x = score_home)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Home Team Score Distribution",
+       subtitle = "Chaos incarnate!")
 ```
 
-### Render the EDA Document
+## Vignettes
 
-```bash
-quarto render eda.qmd
-```
+For a comprehensive exploratory data analysis, see the vignette:
 
-Or in R:
 ```r
-quarto::quarto_render("eda.qmd")
+vignette("calvinball-eda", package = "calvinball")
 ```
 
-## 📦 Requirements
+## Generating Custom Data
 
-### R Packages
+Use `generate_calvinball_data()` to create fresh datasets with custom parameters:
 
-- `tidyverse` - Data manipulation and visualization
-- `gt` - Beautiful tables
-- `scales` - Number formatting
+```r
+# A smaller recreational league
+rec_league <- generate_calvinball_data(
+  n_players = 12,
+  n_teams = 3,
+  n_games = 10,
+  n_seasons = 1,
+  seed = 123  # For reproducibility (against the spirit of Calvinball!)
+)
 
-### Other
+# Access the generated data
+rec_league$players
+rec_league$games
+rec_league$player_stats
+```
 
-- [Quarto](https://quarto.org/) - For rendering the analysis document
+## Hex Logo
 
-## 🎨 Styling
+To generate the hex logo (requires `hexSticker` and `magick` packages):
 
-The EDA document features a custom comic book theme including:
+```r
+source("data-raw/hex-logo.R")
+```
 
-- Bold black borders and drop shadows
-- Comic-style fonts (Bangers for headers, Comic Neue for body text)
-- Speech bubble blockquotes
-- Colorful gradient backgrounds
-- Fun hover effects and animations
+## License
 
-## 📜 License
-
-This is a fun educational project. The Calvin and Hobbes references are used lovingly and are the property of Bill Watterson.
+MIT © James Blair
 
 ---
 

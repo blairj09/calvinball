@@ -1,0 +1,15 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+^\.github$
+^data-raw$
+^renv$
+^renv\.lock$
+^\.Rprofile$
+^eda\.qmd$
+^eda\.html$
+^eda_files$
+^styles\.css$
+^img$
+^posit-assistant-experiments\.Rproj$

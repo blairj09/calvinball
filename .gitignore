@@ -3,10 +3,24 @@
 .RData
 .Ruserdata
 
-# Quarto output (can be regenerated)
+# Quarto/RMarkdown output (can be regenerated)
 eda.html
 eda_files/
 *_files/
+*.html
 
 # OS files
 .DS_Store
+
+# R package build artifacts
+*.tar.gz
+*.Rcheck/
+
+# Vignette build files
+vignettes/*.html
+vignettes/*.R
+inst/doc/
+
+# renv (keeping for reproducibility during development)
+# Uncomment if you don't want renv tracked:
+# renv/

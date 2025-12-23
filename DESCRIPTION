@@ -1,0 +1,32 @@
+Package: calvinball
+Title: Synthetic Sports Data from the Calvinball League
+Version: 0.1.0
+Authors@R: 
+    person("James", "Blair", , "james@posit.co", role = c("aut", "cre"))
+Description: A synthetic sports dataset inspired by Calvinball, the legendary 
+    game from Bill Watterson's Calvin and Hobbes comic strip. The package 
+    provides chaotic game results, player statistics, and team records designed 
+    for teaching data exploration and EDA techniques. Features include wildly 
+    unpredictable scoring (including negative scores!), multiple scoring systems, 
+    and absurd performance metrics like "spontaneous rule declarations" and 
+    "time reversal bonuses".
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 4.1.0)
+Imports:
+    tibble
+Suggests:
+    dplyr,
+    ggplot2,
+    gt,
+    knitr,
+    rmarkdown,
+    scales,
+    tidyr
+VignetteBuilder: knitr
+LazyData: true
+URL: https://github.com/jamesblair/calvinball
+BugReports: https://github.com/jamesblair/calvinball/issues

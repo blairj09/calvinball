@@ -105,6 +105,36 @@ blockquote::after {
   border-bottom: 5px solid transparent;
 }
 
+/* Code blocks - comic border wrapper only, preserve readability */
+div.sourceCode {
+  border: 3px solid #000 !important;
+  border-radius: 8px !important;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  margin: 1rem 0 !important;
+  overflow: hidden;
+}
+
+/* Reset pre inside sourceCode to not double-border */
+div.sourceCode pre {
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* Ensure code is readable - don't mess with syntax highlighting */
+pre, code {
+  font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, monospace !important;
+}
+
+/* Inline code - subtle styling */
+:not(pre) > code {
+  background-color: #f0f0f0 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  border: 1px solid #ddd !important;
+}
+
 /* Comic callout boxes */
 .callout-kapow {
   background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%);
@@ -167,8 +197,8 @@ tbody tr:hover {
   background-color: #FFE66D;
 }
 
-/* Images with comic borders */
-img {
+/* Images with comic borders - exclude logos */
+img:not([src*="logo"]):not([alt*="logo"]) {
   border: 4px solid #000;
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
   background: white;
@@ -176,11 +206,12 @@ img {
   border-radius: 5px;
 }
 
-/* Code blocks */
-pre {
-  border: 3px solid #000 !important;
-  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+/* Ensure logo is not styled */
+img[src*="logo"], img[alt*="logo"] {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  background: transparent !important;
 }
 
 /* Strong and emphasis */

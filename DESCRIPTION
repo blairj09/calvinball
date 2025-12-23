@@ -28,5 +28,5 @@ Suggests:
     tidyr
 VignetteBuilder: knitr
 LazyData: true
-URL: https://github.com/jamesblair/calvinball
-BugReports: https://github.com/jamesblair/calvinball/issues
+URL: https://github.com/blairj09/calvinball
+BugReports: https://github.com/blairj09/calvinball/issues

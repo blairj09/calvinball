@@ -13,7 +13,7 @@ You can install the development version of calvinball from GitHub:
 
 ```r
 # install.packages("pak")
-pak::pak("jamesblair/calvinball")
+pak::pak("blairj09/calvinball")
 ```
 
 ## Quick Start
@@ -115,14 +115,6 @@ rec_league <- generate_calvinball_data(
 rec_league$players
 rec_league$games
 rec_league$player_stats
-```
-
-## Hex Logo
-
-To generate the hex logo (requires `hexSticker` and `magick` packages):
-
-```r
-source("data-raw/hex-logo.R")
 ```
 
 ## License

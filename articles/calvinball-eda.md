@@ -7,10 +7,15 @@ Welcome to the first comprehensive analysis of the **Calvinball
 League**, where chaos meets competition and rules are made up on the
 spot!
 
-Get ready for an exploratory data analysis that examines: - Player
-performance metrics (including the all-important *style points*!) - Team
-dynamics and competitive balance - The beautifully unpredictable nature
-of the game - Statistical patterns in pure chaos
+#### ⚡ KAPOW! ⚡
+
+Get ready for an exploratory data analysis that examines:
+
+- 🎭 Player performance metrics (including the all-important *style
+  points*!)
+- 🏆 Team dynamics and competitive balance
+- 🎲 The beautifully unpredictable nature of the game
+- 📊 Statistical patterns in pure chaos
 
 *Warning: Traditional sports analytics may not apply here!*
 
@@ -24,6 +29,17 @@ library(calvinball)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+
+# Set a comic-inspired theme
+theme_set(theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16, color = "#E74C3C"),
+    plot.subtitle = element_text(color = "#666", face = "italic"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(fill = NA, color = "#000", linewidth = 1.5),
+    axis.title = element_text(face = "bold"),
+    legend.position = "bottom"
+  ))
 ```
 
 ``` r
@@ -83,14 +99,14 @@ cb_players |>
   left_join(cb_teams, by = "team_id") |>
   count(team_name) |>
   ggplot(aes(x = reorder(team_name, n), y = n, fill = team_name)) +
-  geom_col(show.legend = FALSE) +
-  geom_text(aes(label = n), hjust = -0.3) +
+  geom_col(show.legend = FALSE, color = "#000", linewidth = 1) +
+  geom_text(aes(label = n), hjust = -0.3, fontface = "bold") +
   coord_flip() +
   labs(title = "Team Roster Sizes",
+       subtitle = "Players are distributed across all teams",
        x = NULL,
        y = "Number of Players") +
-  scale_fill_brewer(palette = "Set2") +
-  theme_minimal() +
+  scale_fill_manual(values = comic_colors) +
   ylim(0, max(table(cb_players$team_id)) + 1)
 ```
 
@@ -100,8 +116,9 @@ cb_players |>
 
 ### Scoring Chaos
 
-One of the hallmarks of Calvinball is its completely unpredictable
-scoring system!
+**⚡ ZAP!** One of the hallmarks of Calvinball is its completely
+unpredictable scoring system! Scores can range from deeply negative to
+astronomical!
 
 ``` r
 games_long <- cb_games |>
@@ -111,13 +128,12 @@ games_long <- cb_games |>
                values_to = "score")
 
 ggplot(games_long, aes(x = score)) +
-  geom_histogram(bins = 50, fill = "steelblue", alpha = 0.7) +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  geom_histogram(bins = 50, fill = "#3498DB", alpha = 0.8, color = "#000") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "#E74C3C", linewidth = 1.5) +
   labs(title = "Distribution of Game Scores",
        subtitle = "Note the negative scores and extreme outliers - pure Calvinball!",
        x = "Score",
-       y = "Frequency") +
-  theme_minimal()
+       y = "Frequency")
 ```
 
 ![](calvinball-eda_files/figure-html/score-distribution-1.png)
@@ -132,12 +148,14 @@ score_stats <- games_long |>
     `Std Dev` = round(sd(score), 1)
   )
 
-knitr::kable(score_stats)
+knitr::kable(score_stats, caption = "📊 Score Summary Statistics")
 ```
 
 | Minimum | Median |  Mean | Maximum | Std Dev |
 |--------:|-------:|------:|--------:|--------:|
 |    -480 |     15 | 142.4 |    2018 |   386.2 |
+
+📊 Score Summary Statistics
 
 ### Scoring Types
 
@@ -148,15 +166,14 @@ game!
 cb_games |>
   count(scoring_type) |>
   ggplot(aes(x = reorder(scoring_type, n), y = n, fill = scoring_type)) +
-  geom_col(show.legend = FALSE) +
-  geom_text(aes(label = n), hjust = -0.3, size = 3) +
+  geom_col(show.legend = FALSE, color = "#000", linewidth = 1) +
+  geom_text(aes(label = n), hjust = -0.3, size = 3.5, fontface = "bold") +
   coord_flip() +
   labs(title = "Frequency of Scoring Types",
        subtitle = "Because consistency is boring!",
        x = NULL,
        y = "Number of Games") +
-  scale_fill_brewer(palette = "Set3") +
-  theme_minimal() +
+  scale_fill_manual(values = comic_colors) +
   ylim(0, max(table(cb_games$scoring_type)) + 3)
 ```
 
@@ -171,10 +188,8 @@ First, let’s compute team records from the games data:
 ``` r
 # Compute team records from games
 team_records <- cb_games |>
-  # Get home team results
   select(season, team_id = team_home, score_for = score_home, score_against = score_away) |>
   bind_rows(
-    # Get away team results
     cb_games |>
       select(season, team_id = team_away, score_for = score_away, score_against = score_home)
   ) |>
@@ -201,14 +216,14 @@ team_records_plot <- team_records |>
   mutate(season = factor(season))
 
 ggplot(team_records_plot, aes(x = reorder(team_name, total_wins), y = wins, fill = season)) +
-  geom_col(position = "dodge") +
+  geom_col(position = "dodge", color = "#000", linewidth = 0.5) +
   coord_flip() +
   labs(title = "Team Wins by Season",
+       subtitle = "How do teams stack up across seasons?",
        x = NULL,
        y = "Wins",
        fill = "Season") +
-  scale_fill_brewer(palette = "Set1") +
-  theme_minimal()
+  scale_fill_manual(values = c("#FF6B6B", "#4ECDC4", "#FFD93D"))
 ```
 
 ![](calvinball-eda_files/figure-html/team-records-1.png)
@@ -230,7 +245,8 @@ overall_records <- team_records |>
 
 overall_records |>
   select(team_name, total_wins, total_losses, total_ties, win_pct) |>
-  knitr::kable(col.names = c("Team", "Wins", "Losses", "Ties", "Win %"))
+  knitr::kable(col.names = c("Team", "Wins", "Losses", "Ties", "Win %"),
+               caption = "🏆 Overall Team Records (All Seasons)")
 ```
 
 | Team               | Wins | Losses | Ties | Win % |
@@ -241,6 +257,8 @@ overall_records |>
 | Time Travelers     |   22 |     26 |    0 | 0.458 |
 | Dinosaur Riders    |   21 |     29 |    1 | 0.412 |
 | Space Explorers    |   24 |     36 |    1 | 0.393 |
+
+🏆 Overall Team Records (All Seasons)
 
 ### Home vs Away Performance
 
@@ -254,16 +272,15 @@ home_away_summary <- cb_games |>
   pivot_longer(everything(), names_to = "outcome", values_to = "count")
 
 ggplot(home_away_summary, aes(x = outcome, y = count, fill = outcome)) +
-  geom_col(show.legend = FALSE) +
-  geom_text(aes(label = count), vjust = -0.5, size = 5) +
+  geom_col(show.legend = FALSE, color = "#000", linewidth = 1) +
+  geom_text(aes(label = count), vjust = -0.5, size = 6, fontface = "bold") +
   labs(title = "Home vs Away Performance",
        subtitle = "Surprisingly, there might be a home field advantage!",
        x = NULL,
        y = "Number of Games") +
-  scale_fill_manual(values = c("Home Wins" = "forestgreen",
-                                "Away Wins" = "firebrick",
-                                "Ties" = "gray60")) +
-  theme_minimal() +
+  scale_fill_manual(values = c("Home Wins" = "#27AE60",
+                                "Away Wins" = "#E74C3C",
+                                "Ties" = "#95A5A6")) +
   ylim(0, max(home_away_summary$count) + 10)
 ```
 
@@ -292,7 +309,8 @@ player_summary <- cb_player_stats |>
 
 ### Style Points Leaders
 
-In Calvinball, style matters as much as substance!
+**⭐ STYLE MATTERS!** In Calvinball, style is just as important as
+substance. These are the players with the most panache!
 
 ``` r
 top_style <- player_summary |>
@@ -303,7 +321,8 @@ top_style <- player_summary |>
 top_style |>
   select(player_name, team_name, games_played, avg_style_points) |>
   mutate(avg_style_points = round(avg_style_points, 2)) |>
-  knitr::kable(col.names = c("Player", "Team", "Games", "Avg Style Points"))
+  knitr::kable(col.names = c("Player", "Team", "Games", "Avg Style Points"),
+               caption = "⭐ Top 10 Players by Average Style Points")
 ```
 
 | Player          | Team               | Games | Avg Style Points |
@@ -319,20 +338,21 @@ top_style |>
 | Rosalyn Vortex  | Space Explorers    |    33 |            52.37 |
 | Rosalyn Torpid  | Transmogrifiers    |    26 |            52.17 |
 
+⭐ Top 10 Players by Average Style Points
+
 ``` r
 top_style |>
   ggplot(aes(x = reorder(player_name, avg_style_points),
              y = avg_style_points,
              fill = team_name)) +
-  geom_col() +
+  geom_col(color = "#000", linewidth = 1) +
   coord_flip() +
   labs(title = "Top 10 Players by Average Style Points",
        subtitle = "Flair and panache are everything in Calvinball!",
        x = NULL,
        y = "Average Style Points",
        fill = "Team") +
-  scale_fill_brewer(palette = "Set2") +
-  theme_minimal()
+  scale_fill_manual(values = comic_colors)
 ```
 
 ![](calvinball-eda_files/figure-html/style-plot-1.png)
@@ -342,20 +362,21 @@ top_style |>
 ``` r
 player_summary |>
   ggplot(aes(x = avg_wickets, y = avg_style_points)) +
-  geom_point(alpha = 0.6, size = 3, color = "darkblue") +
-  geom_smooth(method = "lm", se = TRUE, color = "red", linetype = "dashed") +
+  geom_point(alpha = 0.7, size = 4, color = "#3498DB") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E74C3C", linetype = "dashed", linewidth = 1.5) +
   labs(title = "Style Points vs Wickets Scored",
        subtitle = "Is there a relationship between technical skill and style?",
        x = "Average Wickets Scored",
-       y = "Average Style Points") +
-  theme_minimal()
+       y = "Average Style Points")
 ```
 
 ![](calvinball-eda_files/figure-html/wickets-analysis-1.png)
 
 ### Rule Declarations
 
-Spontaneous rule declarations are a cornerstone of Calvinball strategy!
+**🎨 CREATIVE GENIUS!** Spontaneous rule declarations are a cornerstone
+of Calvinball strategy! The most innovative players make up the best
+rules!
 
 ``` r
 top_declarers <- player_summary |>
@@ -365,7 +386,8 @@ top_declarers <- player_summary |>
 
 top_declarers |>
   select(player_name, team_name, total_rule_declarations, games_played) |>
-  knitr::kable(col.names = c("Player", "Team", "Total Declarations", "Games Played"))
+  knitr::kable(col.names = c("Player", "Team", "Total Declarations", "Games Played"),
+               caption = "🎨 Top Rule Declarers - The Most Creative Minds!")
 ```
 
 | Player            | Team               | Total Declarations | Games Played |
@@ -380,6 +402,8 @@ top_declarers |>
 | Moe Nebula        | Time Travelers     |                 19 |           34 |
 | Moe Torpid        | Space Explorers    |                 19 |           39 |
 | Susie Quantum     | Dinosaur Riders    |                 18 |           28 |
+
+🎨 Top Rule Declarers - The Most Creative Minds!
 
 ## Advanced Metrics
 
@@ -408,15 +432,14 @@ player_versatility |>
   ggplot(aes(x = reorder(player_name, versatility),
              y = versatility,
              fill = team_name)) +
-  geom_col() +
+  geom_col(color = "#000", linewidth = 1) +
   coord_flip() +
   labs(title = "Top 15 Most Versatile Players",
        subtitle = "Combining style, wickets, and rule declarations",
        x = NULL,
        y = "Versatility Score",
        fill = "Team") +
-  scale_fill_brewer(palette = "Set3") +
-  theme_minimal()
+  scale_fill_manual(values = comic_colors)
 ```
 
 ![](calvinball-eda_files/figure-html/versatility-1.png)
@@ -442,32 +465,32 @@ small_league$players
 small_league$games
 ```
 
-## Conclusions
+------------------------------------------------------------------------
 
-**Key Findings:**
+#### 💥 BAM! Key Findings 💥
 
-1.  **SCORING CHAOS!** Calvinball lives up to its reputation with scores
-    ranging from -480 to 2,018, with a standard deviation of 386.2.
-    That’s WILD!
+**1. SCORING CHAOS!** Calvinball lives up to its reputation with scores
+ranging from -480 to 2,018, with a standard deviation of 386.2. That’s
+WILD!
 
-2.  **HOME FIELD ADVANTAGE?!** Despite the chaotic nature of the game,
-    there appears to be a slight home field advantage, with home teams
-    winning approximately 50% of games. Who knew?
+**2. HOME FIELD ADVANTAGE?!** Despite the chaotic nature of the game,
+there appears to be a slight home field advantage, with home teams
+winning approximately 50% of games. Who knew?
 
-3.  **STYLE MATTERS!** The top performers in style points show
-    considerable variability, suggesting that multiple approaches to
-    Calvinball can be successful.
+**3. STYLE MATTERS!** The top performers in style points show
+considerable variability, suggesting that multiple approaches to
+Calvinball can be successful.
 
-4.  **COMPETITIVE BALANCE!** The league shows good parity, with win
-    percentages ranging from 0.393 to 0.628. Anyone can win!
+**4. COMPETITIVE BALANCE!** The league shows good parity, with win
+percentages ranging from 0.393 to 0.628. Anyone can win!
 
-5.  **CREATIVE GENIUS!** Players average 16.2 spontaneous rule
-    declarations over their careers, demonstrating the inventive spirit
-    of the game.
+**5. CREATIVE GENIUS!** Players average 16.2 spontaneous rule
+declarations over their careers, demonstrating the inventive spirit of
+the game.
 
 ------------------------------------------------------------------------
 
 *“Sometimes I think the surest sign that intelligent life exists
 elsewhere in the universe is that none of it has tried to contact us.”*
 
-**The Score is STILL Q to 12!**
+🏴 The Score is STILL Q to 12! 🏴

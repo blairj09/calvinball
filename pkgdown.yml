@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   calvinball-eda: calvinball-eda.html
-last_built: 2025-12-23T15:10Z
+last_built: 2025-12-23T15:38Z
 urls:
   reference: https://blairj09.github.io/calvinball/reference
   article: https://blairj09.github.io/calvinball/articles

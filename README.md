@@ -123,7 +123,3 @@ MIT © James Blair
 
 ---
 
-<p align="center">
-<strong>⚡ OLLY OLLY OXEN FREE! ⚡</strong><br>
-<em>The Score is STILL Q to 12!</em>
-</p>

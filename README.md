@@ -121,5 +121,9 @@ rec_league$player_stats
 
 MIT © James Blair
 
+## Disclaimer
+
+This package was created primarily using AI assistance for educational purposes. It is a fan-made project and has no official association with Bill Watterson, *Calvin and Hobbes*, or any related intellectual property. *Calvin and Hobbes* is © Bill Watterson. This project is intended as an homage to the creativity and imagination of the comic strip.
+
 ---
 

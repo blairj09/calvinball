@@ -20,7 +20,3 @@ eda_files/
 vignettes/*.html
 vignettes/*.R
 inst/doc/
-
-# renv (keeping for reproducibility during development)
-# Uncomment if you don't want renv tracked:
-# renv/

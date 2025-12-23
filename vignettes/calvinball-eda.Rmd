@@ -293,6 +293,7 @@ library(calvinball)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(gt)
 
 # Set a comic-inspired theme
 theme_set(theme_minimal(base_size = 14) +
@@ -337,7 +338,20 @@ teams_with_size <- cb_players |>
 
 teams_with_size |>
   select(team_name, roster_size) |>
-  knitr::kable(col.names = c("Team Name", "Roster Size"))
+  gt() |>
+  cols_label(
+    team_name = "Team Name",
+    roster_size = "Roster Size"
+  ) |>
+  tab_style(
+    style = cell_fill(color = "#FFD93D"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) |>
+  opt_row_striping()
 ```
 
 ### Player Distribution
@@ -392,7 +406,18 @@ score_stats <- games_long |>
     `Std Dev` = round(sd(score), 1)
   )
 
-knitr::kable(score_stats, caption = "📊 Score Summary Statistics")
+score_stats |>
+  gt() |>
+  tab_header(title = "📊 Score Summary Statistics") |>
+  tab_style(
+    style = cell_fill(color = "#FF6B6B"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold", color = "white"),
+    locations = cells_column_labels()
+  ) |>
+  fmt_number(columns = everything(), decimals = 1)
 ```
 
 ### Scoring Types
@@ -478,8 +503,32 @@ overall_records <- team_records |>
 
 overall_records |>
   select(team_name, total_wins, total_losses, total_ties, win_pct) |>
-  knitr::kable(col.names = c("Team", "Wins", "Losses", "Ties", "Win %"),
-               caption = "🏆 Overall Team Records (All Seasons)")
+  gt() |>
+  cols_label(
+    team_name = "Team",
+    total_wins = "Wins",
+    total_losses = "Losses",
+    total_ties = "Ties",
+    win_pct = "Win %"
+  ) |>
+  tab_header(title = "🏆 Overall Team Records (All Seasons)") |>
+  tab_style(
+    style = cell_fill(color = "#4ECDC4"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) |>
+  fmt_percent(columns = win_pct, decimals = 1) |>
+  opt_row_striping() |>
+  data_color(
+    columns = win_pct,
+    colors = scales::col_numeric(
+      palette = c("#FF6B6B", "#FFD93D", "#27AE60"),
+      domain = c(0, 1)
+    )
+  )
 ```
 
 ### Home vs Away Performance
@@ -541,9 +590,31 @@ top_style <- player_summary |>
 
 top_style |>
   select(player_name, team_name, games_played, avg_style_points) |>
-  mutate(avg_style_points = round(avg_style_points, 2)) |>
-  knitr::kable(col.names = c("Player", "Team", "Games", "Avg Style Points"),
-               caption = "⭐ Top 10 Players by Average Style Points")
+  gt() |>
+  cols_label(
+    player_name = "Player",
+    team_name = "Team",
+    games_played = "Games",
+    avg_style_points = "Avg Style Points"
+  ) |>
+  tab_header(title = "⭐ Top 10 Players by Average Style Points") |>
+  tab_style(
+    style = cell_fill(color = "#A8E6CF"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) |>
+  fmt_number(columns = avg_style_points, decimals = 2) |>
+  opt_row_striping() |>
+  data_color(
+    columns = avg_style_points,
+    colors = scales::col_numeric(
+      palette = c("#FFD93D", "#FF6B6B"),
+      domain = NULL
+    )
+  )
 ```
 
 ```{r style-plot, fig.height=6}
@@ -588,8 +659,30 @@ top_declarers <- player_summary |>
 
 top_declarers |>
   select(player_name, team_name, total_rule_declarations, games_played) |>
-  knitr::kable(col.names = c("Player", "Team", "Total Declarations", "Games Played"),
-               caption = "🎨 Top Rule Declarers - The Most Creative Minds!")
+  gt() |>
+  cols_label(
+    player_name = "Player",
+    team_name = "Team",
+    total_rule_declarations = "Total Declarations",
+    games_played = "Games Played"
+  ) |>
+  tab_header(title = "🎨 Top Rule Declarers - The Most Creative Minds!") |>
+  tab_style(
+    style = cell_fill(color = "#6C5CE7"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold", color = "white"),
+    locations = cells_column_labels()
+  ) |>
+  opt_row_striping() |>
+  data_color(
+    columns = total_rule_declarations,
+    colors = scales::col_numeric(
+      palette = c("#95E1D3", "#4ECDC4", "#3498DB"),
+      domain = NULL
+    )
+  )
 ```
 
 ## Advanced Metrics

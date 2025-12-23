@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Quarto output (can be regenerated)
+eda.html
+eda_files/
+*_files/
+
+# OS files
+.DS_Store

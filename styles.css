@@ -1,0 +1,409 @@
+/* Calvin and Hobbes / Comic Book Inspired Styling */
+
+/* Import comic-style fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Permanent+Marker&display=swap');
+
+/* Body and general styling */
+body {
+  background-color: #FFF9E6;
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.3) 2px,
+      rgba(255, 255, 255, 0.3) 4px
+    );
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+  color: #2C3E50;
+  line-height: 1.6;
+}
+
+/* Main content area */
+#quarto-content {
+  background-color: white;
+  border: 4px solid #000;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
+/* Headers with comic book style */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #E74C3C;
+  text-shadow: 3px 3px 0px #000,
+               4px 4px 0px rgba(0, 0, 0, 0.2);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  color: #2C3E50;
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%);
+  border: 5px solid #000;
+  box-shadow: 0 0 0 3px #FFD93D,
+              0 0 0 6px #000;
+  transform: rotate(-1deg);
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  border-bottom: 4px solid #000;
+  padding-bottom: 0.5rem;
+  color: #3498DB;
+  position: relative;
+  padding-left: 20px;
+}
+
+h2::before {
+  content: "★";
+  position: absolute;
+  left: -5px;
+  color: #FFD93D;
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 2rem;
+  color: #E67E22;
+  border-left: 8px solid #E67E22;
+  padding-left: 15px;
+}
+
+h4 {
+  font-size: 1.5rem;
+  color: #9B59B6;
+}
+
+/* Subtitle styling */
+.subtitle {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #E74C3C;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* Blockquote as speech bubble */
+blockquote {
+  background: #FFE66D;
+  border: 3px solid #000;
+  border-radius: 20px;
+  padding: 1.5rem;
+  position: relative;
+  margin: 2rem 2rem 2rem 3rem;
+  font-family: 'Comic Neue', cursive;
+  font-size: 1.2rem;
+  font-style: italic;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+blockquote::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 20px;
+  width: 0;
+  height: 0;
+  border-right: 20px solid #000;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+blockquote::after {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 23px;
+  width: 0;
+  height: 0;
+  border-right: 14px solid #FFE66D;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+}
+
+/* Code blocks with comic style */
+pre, code {
+  font-family: 'Courier New', monospace;
+  background-color: #F0F0F0;
+  border: 2px solid #000;
+  border-radius: 5px;
+}
+
+pre {
+  padding: 1rem;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Tables with comic borders */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 3px solid #000;
+  margin: 1.5rem auto;
+  background-color: white;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+thead {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%);
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+th {
+  border: 2px solid #000;
+  padding: 12px;
+  color: #000;
+}
+
+td {
+  border: 2px solid #000;
+  padding: 10px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #FFF9E6;
+}
+
+tbody tr:hover {
+  background-color: #FFE66D;
+  transform: scale(1.01);
+  transition: all 0.2s;
+}
+
+/* Figure captions */
+figcaption, .figure-caption {
+  font-family: 'Permanent Marker', cursive;
+  color: #E74C3C;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #FFE66D;
+  border: 2px solid #000;
+  border-radius: 10px;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Plot styling - add comic borders */
+img, .plot {
+  border: 4px solid #000;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  padding: 10px;
+  margin: 1rem 0;
+}
+
+/* Links */
+a {
+  color: #3498DB;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 2px solid #3498DB;
+  transition: all 0.2s;
+}
+
+a:hover {
+  color: #E74C3C;
+  border-bottom: 2px solid #E74C3C;
+  background-color: #FFE66D;
+  padding: 2px 4px;
+}
+
+/* Table of contents */
+#TOC {
+  background: linear-gradient(135deg, #A8E6CF 0%, #FFD93D 100%);
+  border: 4px solid #000;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  font-family: 'Comic Neue', cursive;
+  font-weight: bold;
+}
+
+#TOC ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#TOC li::before {
+  content: "⚡ ";
+  color: #E74C3C;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+#TOC a {
+  border-bottom: none;
+  color: #2C3E50;
+}
+
+#TOC a:hover {
+  color: #E74C3C;
+  background-color: transparent;
+}
+
+/* Code folding buttons */
+.code-fold {
+  background-color: #FFD93D;
+  border: 3px solid #000;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.code-fold:hover {
+  background-color: #FF6B6B;
+  transform: scale(1.05);
+}
+
+/* Special callout boxes */
+.callout {
+  border: 4px solid #000;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  background-color: #A8E6CF;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  font-family: 'Comic Neue', cursive;
+}
+
+.callout-title {
+  font-family: 'Bangers', cursive;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: #E74C3C;
+  margin-bottom: 0.5rem;
+}
+
+/* Author and date */
+.author, .date {
+  text-align: center;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.2rem;
+  color: #9B59B6;
+  margin: 0.5rem 0;
+}
+
+/* Page breaks for printing */
+@media print {
+  body {
+    background: white;
+  }
+  
+  #quarto-content {
+    border: none;
+    box-shadow: none;
+  }
+}
+
+/* Horizontal rules */
+hr {
+  border: none;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #000 0px,
+    #000 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  margin: 2rem 0;
+}
+
+/* Data frame / paged table styling */
+.pagedtable {
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.pagedtable-wrapper {
+  background-color: white;
+}
+
+/* Panel tabset */
+.panel-tabset {
+  border: 3px solid #000;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Emphasis */
+strong, b {
+  color: #E74C3C;
+  font-weight: bold;
+}
+
+em, i {
+  color: #3498DB;
+  font-style: italic;
+}
+
+/* Fun animation for page load */
+@keyframes pop-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+#quarto-content {
+  animation: pop-in 0.5s ease-out;
+}
+
+/* Comic panel sections */
+.comic-panel {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFE66D 100%);
+  border: 4px solid #000;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.comic-panel::before {
+  content: "★";
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  font-size: 2rem;
+  color: #FFD93D;
+  text-shadow: 2px 2px 0px #000;
+}
+
+/* KAPOW! BOOM! style elements */
+.comic-emphasis {
+  display: inline-block;
+  background: #FFD93D;
+  border: 3px solid #000;
+  padding: 5px 15px;
+  transform: rotate(-2deg);
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+  margin: 0 5px;
+}

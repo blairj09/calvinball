@@ -29,6 +29,7 @@ library(calvinball)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(gt)
 
 # Set a comic-inspired theme
 theme_set(theme_minimal(base_size = 14) +
@@ -80,17 +81,30 @@ teams_with_size <- cb_players |>
 
 teams_with_size |>
   select(team_name, roster_size) |>
-  knitr::kable(col.names = c("Team Name", "Roster Size"))
+  gt() |>
+  cols_label(
+    team_name = "Team Name",
+    roster_size = "Roster Size"
+  ) |>
+  tab_style(
+    style = cell_fill(color = "#FFD93D"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) |>
+  opt_row_striping()
 ```
 
 | Team Name          | Roster Size |
-|:-------------------|------------:|
-| Time Travelers     |           5 |
-| Space Explorers    |           5 |
-| G.R.O.S.S. Members |           5 |
-| Snowmen Builders   |           5 |
-| Dinosaur Riders    |           5 |
-| Transmogrifiers    |           5 |
+|--------------------|-------------|
+| Time Travelers     | 5           |
+| Space Explorers    | 5           |
+| G.R.O.S.S. Members | 5           |
+| Snowmen Builders   | 5           |
+| Dinosaur Riders    | 5           |
+| Transmogrifiers    | 5           |
 
 ### Player Distribution
 
@@ -148,14 +162,24 @@ score_stats <- games_long |>
     `Std Dev` = round(sd(score), 1)
   )
 
-knitr::kable(score_stats, caption = "📊 Score Summary Statistics")
+score_stats |>
+  gt() |>
+  tab_header(title = "📊 Score Summary Statistics") |>
+  tab_style(
+    style = cell_fill(color = "#FF6B6B"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold", color = "white"),
+    locations = cells_column_labels()
+  ) |>
+  fmt_number(columns = everything(), decimals = 1)
 ```
 
-| Minimum | Median |  Mean | Maximum | Std Dev |
-|--------:|-------:|------:|--------:|--------:|
-|    -480 |     15 | 142.4 |    2018 |   386.2 |
-
-📊 Score Summary Statistics
+| 📊 Score Summary Statistics |        |       |         |         |
+|-----------------------------|--------|-------|---------|---------|
+| Minimum                     | Median | Mean  | Maximum | Std Dev |
+| −480.0                      | 15.0   | 142.4 | 2,018.0 | 386.2   |
 
 ### Scoring Types
 
@@ -245,20 +269,43 @@ overall_records <- team_records |>
 
 overall_records |>
   select(team_name, total_wins, total_losses, total_ties, win_pct) |>
-  knitr::kable(col.names = c("Team", "Wins", "Losses", "Ties", "Win %"),
-               caption = "🏆 Overall Team Records (All Seasons)")
+  gt() |>
+  cols_label(
+    team_name = "Team",
+    total_wins = "Wins",
+    total_losses = "Losses",
+    total_ties = "Ties",
+    win_pct = "Win %"
+  ) |>
+  tab_header(title = "🏆 Overall Team Records (All Seasons)") |>
+  tab_style(
+    style = cell_fill(color = "#4ECDC4"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) |>
+  fmt_percent(columns = win_pct, decimals = 1) |>
+  opt_row_striping() |>
+  data_color(
+    columns = win_pct,
+    colors = scales::col_numeric(
+      palette = c("#FF6B6B", "#FFD93D", "#27AE60"),
+      domain = c(0, 1)
+    )
+  )
 ```
 
-| Team               | Wins | Losses | Ties | Win % |
-|:-------------------|-----:|-------:|-----:|------:|
-| Transmogrifiers    |   27 |     15 |    1 | 0.628 |
-| Snowmen Builders   |   30 |     18 |    1 | 0.612 |
-| G.R.O.S.S. Members |   23 |     23 |    2 | 0.479 |
-| Time Travelers     |   22 |     26 |    0 | 0.458 |
-| Dinosaur Riders    |   21 |     29 |    1 | 0.412 |
-| Space Explorers    |   24 |     36 |    1 | 0.393 |
-
-🏆 Overall Team Records (All Seasons)
+| 🏆 Overall Team Records (All Seasons) |      |        |      |       |
+|---------------------------------------|------|--------|------|-------|
+| Team                                  | Wins | Losses | Ties | Win % |
+| Transmogrifiers                       | 27   | 15     | 1    | 62.8% |
+| Snowmen Builders                      | 30   | 18     | 1    | 61.2% |
+| G.R.O.S.S. Members                    | 23   | 23     | 2    | 47.9% |
+| Time Travelers                        | 22   | 26     | 0    | 45.8% |
+| Dinosaur Riders                       | 21   | 29     | 1    | 41.2% |
+| Space Explorers                       | 24   | 36     | 1    | 39.3% |
 
 ### Home vs Away Performance
 
@@ -320,25 +367,46 @@ top_style <- player_summary |>
 
 top_style |>
   select(player_name, team_name, games_played, avg_style_points) |>
-  mutate(avg_style_points = round(avg_style_points, 2)) |>
-  knitr::kable(col.names = c("Player", "Team", "Games", "Avg Style Points"),
-               caption = "⭐ Top 10 Players by Average Style Points")
+  gt() |>
+  cols_label(
+    player_name = "Player",
+    team_name = "Team",
+    games_played = "Games",
+    avg_style_points = "Avg Style Points"
+  ) |>
+  tab_header(title = "⭐ Top 10 Players by Average Style Points") |>
+  tab_style(
+    style = cell_fill(color = "#A8E6CF"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels()
+  ) |>
+  fmt_number(columns = avg_style_points, decimals = 2) |>
+  opt_row_striping() |>
+  data_color(
+    columns = avg_style_points,
+    colors = scales::col_numeric(
+      palette = c("#FFD93D", "#FF6B6B"),
+      domain = NULL
+    )
+  )
 ```
 
-| Player          | Team               | Games | Avg Style Points |
-|:----------------|:-------------------|------:|-----------------:|
-| Lord Napalm     | G.R.O.S.S. Members |    27 |            69.75 |
-| Sir Zoom        | G.R.O.S.S. Members |    26 |            59.71 |
-| Baron Lightning | Snowmen Builders   |    36 |            56.96 |
-| Rosalyn Zoom    | Time Travelers     |    32 |            56.85 |
-| Susie Quantum   | Dinosaur Riders    |    28 |            55.03 |
-| Lord Cosmic     | G.R.O.S.S. Members |    34 |            54.25 |
-| Hobbes Wormwood | Time Travelers     |    26 |            53.56 |
-| Captain Quantum | Snowmen Builders   |    31 |            52.92 |
-| Rosalyn Vortex  | Space Explorers    |    33 |            52.37 |
-| Rosalyn Torpid  | Transmogrifiers    |    26 |            52.17 |
-
-⭐ Top 10 Players by Average Style Points
+| ⭐ Top 10 Players by Average Style Points |                    |       |                  |
+|-------------------------------------------|--------------------|-------|------------------|
+| Player                                    | Team               | Games | Avg Style Points |
+| Lord Napalm                               | G.R.O.S.S. Members | 27    | 69.75            |
+| Sir Zoom                                  | G.R.O.S.S. Members | 26    | 59.71            |
+| Baron Lightning                           | Snowmen Builders   | 36    | 56.96            |
+| Rosalyn Zoom                              | Time Travelers     | 32    | 56.85            |
+| Susie Quantum                             | Dinosaur Riders    | 28    | 55.03            |
+| Lord Cosmic                               | G.R.O.S.S. Members | 34    | 54.25            |
+| Hobbes Wormwood                           | Time Travelers     | 26    | 53.56            |
+| Captain Quantum                           | Snowmen Builders   | 31    | 52.92            |
+| Rosalyn Vortex                            | Space Explorers    | 33    | 52.37            |
+| Rosalyn Torpid                            | Transmogrifiers    | 26    | 52.17            |
 
 ``` r
 top_style |>
@@ -386,24 +454,45 @@ top_declarers <- player_summary |>
 
 top_declarers |>
   select(player_name, team_name, total_rule_declarations, games_played) |>
-  knitr::kable(col.names = c("Player", "Team", "Total Declarations", "Games Played"),
-               caption = "🎨 Top Rule Declarers - The Most Creative Minds!")
+  gt() |>
+  cols_label(
+    player_name = "Player",
+    team_name = "Team",
+    total_rule_declarations = "Total Declarations",
+    games_played = "Games Played"
+  ) |>
+  tab_header(title = "🎨 Top Rule Declarers - The Most Creative Minds!") |>
+  tab_style(
+    style = cell_fill(color = "#6C5CE7"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold", color = "white"),
+    locations = cells_column_labels()
+  ) |>
+  opt_row_striping() |>
+  data_color(
+    columns = total_rule_declarations,
+    colors = scales::col_numeric(
+      palette = c("#95E1D3", "#4ECDC4", "#3498DB"),
+      domain = NULL
+    )
+  )
 ```
 
-| Player            | Team               | Total Declarations | Games Played |
-|:------------------|:-------------------|-------------------:|-------------:|
-| Professor Thunder | Space Explorers    |                 32 |           40 |
-| Rosalyn Nebula    | Dinosaur Riders    |                 29 |           31 |
-| Baron Nebula      | G.R.O.S.S. Members |                 26 |           31 |
-| Sir Lightning     | Dinosaur Riders    |                 22 |           33 |
-| Susie Slime       | Dinosaur Riders    |                 22 |           35 |
-| Baron Lightning   | Snowmen Builders   |                 21 |           36 |
-| Lord Cosmic       | G.R.O.S.S. Members |                 21 |           34 |
-| Moe Nebula        | Time Travelers     |                 19 |           34 |
-| Moe Torpid        | Space Explorers    |                 19 |           39 |
-| Susie Quantum     | Dinosaur Riders    |                 18 |           28 |
-
-🎨 Top Rule Declarers - The Most Creative Minds!
+| 🎨 Top Rule Declarers - The Most Creative Minds! |                    |                    |              |
+|--------------------------------------------------|--------------------|--------------------|--------------|
+| Player                                           | Team               | Total Declarations | Games Played |
+| Professor Thunder                                | Space Explorers    | 32                 | 40           |
+| Rosalyn Nebula                                   | Dinosaur Riders    | 29                 | 31           |
+| Baron Nebula                                     | G.R.O.S.S. Members | 26                 | 31           |
+| Sir Lightning                                    | Dinosaur Riders    | 22                 | 33           |
+| Susie Slime                                      | Dinosaur Riders    | 22                 | 35           |
+| Baron Lightning                                  | Snowmen Builders   | 21                 | 36           |
+| Lord Cosmic                                      | G.R.O.S.S. Members | 21                 | 34           |
+| Moe Nebula                                       | Time Travelers     | 19                 | 34           |
+| Moe Torpid                                       | Space Explorers    | 19                 | 39           |
+| Susie Quantum                                    | Dinosaur Riders    | 18                 | 28           |
 
 ## Advanced Metrics
 

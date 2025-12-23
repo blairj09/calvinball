@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/blairj09/calvinball/blob/package/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/blairj09/calvinball/blob/main/DESCRIPTION)
 
 Blair J (2025). *calvinball: Synthetic Sports Data from the Calvinball
 League*. R package version 0.1.0,

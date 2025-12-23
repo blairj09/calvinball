@@ -1,12 +1,19 @@
 url: https://blairj09.github.io/calvinball/
 
 template:
-
   bootstrap: 5
-  bootswatch: cosmo
   bslib:
     primary: "#E74C3C"
-    secondary: "#3498DB"
+    secondary: "#FFD93D"
+    success: "#27AE60"
+    info: "#3498DB"
+    warning: "#F39C12"
+    danger: "#C0392B"
+  includes:
+    in_header: |
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 
 home:
   title: "calvinball"

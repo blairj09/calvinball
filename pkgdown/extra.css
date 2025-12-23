@@ -1,0 +1,530 @@
+/* Calvin and Hobbes / Comic Book Inspired Styling for pkgdown */
+
+/* Import comic-style fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Permanent+Marker&display=swap');
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+body {
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif !important;
+  background-color: #FFF9E6;
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.3) 2px,
+      rgba(255, 255, 255, 0.3) 4px
+    );
+}
+
+/* Main content wrapper */
+.container, main {
+  background-color: white;
+  border: 4px solid #000;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* ============================================
+   HEADERS - Comic Book Style
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: 'Bangers', cursive !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #E74C3C;
+  text-shadow: 2px 2px 0px #000,
+               3px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+h1, .h1 {
+  font-size: 3rem !important;
+  color: #2C3E50 !important;
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%);
+  border: 5px solid #000;
+  box-shadow: 0 0 0 3px #FFD93D,
+              0 0 0 6px #000;
+  transform: rotate(-1deg);
+  margin-bottom: 2rem !important;
+  border-radius: 10px;
+}
+
+h2, .h2 {
+  font-size: 2.2rem !important;
+  border-bottom: 4px solid #000;
+  padding-bottom: 0.5rem;
+  color: #3498DB !important;
+  position: relative;
+  padding-left: 25px;
+  margin-top: 2rem !important;
+}
+
+h2::before, .h2::before {
+  content: "★";
+  position: absolute;
+  left: 0;
+  color: #FFD93D;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 0 #000;
+}
+
+h3, .h3 {
+  font-size: 1.8rem !important;
+  color: #E67E22 !important;
+  border-left: 8px solid #E67E22;
+  padding-left: 15px;
+}
+
+h4, .h4 {
+  font-size: 1.4rem !important;
+  color: #9B59B6 !important;
+}
+
+/* ============================================
+   NAVBAR - Comic Style
+   ============================================ */
+
+.navbar {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%) !important;
+  border-bottom: 4px solid #000 !important;
+  box-shadow: 0 4px 0px rgba(0, 0, 0, 0.3);
+  font-family: 'Bangers', cursive !important;
+}
+
+.navbar-brand {
+  font-family: 'Bangers', cursive !important;
+  font-size: 1.8rem !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #2C3E50 !important;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+
+.navbar-nav .nav-link {
+  font-family: 'Comic Neue', cursive !important;
+  font-weight: bold !important;
+  color: #2C3E50 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  margin: 0 5px;
+  transition: all 0.2s;
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: #FFE66D !important;
+  border: 2px solid #000;
+  transform: scale(1.05);
+}
+
+/* ============================================
+   BLOCKQUOTES - Speech Bubbles
+   ============================================ */
+
+blockquote, .blockquote {
+  background: #FFE66D !important;
+  border: 3px solid #000 !important;
+  border-radius: 20px !important;
+  padding: 1.5rem !important;
+  position: relative;
+  margin: 2rem 2rem 2rem 3rem !important;
+  font-family: 'Comic Neue', cursive !important;
+  font-size: 1.2rem;
+  font-style: italic;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #000 !important;
+}
+
+blockquote::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 20px;
+  width: 0;
+  height: 0;
+  border-right: 20px solid #000;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+blockquote::after {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 23px;
+  width: 0;
+  height: 0;
+  border-right: 14px solid #FFE66D;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+}
+
+/* ============================================
+   CODE BLOCKS
+   ============================================ */
+
+pre, code {
+  font-family: 'Courier New', monospace !important;
+  background-color: #F0F0F0 !important;
+  border: 2px solid #000 !important;
+  border-radius: 5px !important;
+}
+
+pre {
+  padding: 1rem !important;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+.sourceCode {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+/* ============================================
+   TABLES - Comic Borders
+   ============================================ */
+
+table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 3px solid #000 !important;
+  margin: 1.5rem auto !important;
+  background-color: white !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead, .thead-light th {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%) !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #000 !important;
+}
+
+th {
+  border: 2px solid #000 !important;
+  padding: 12px !important;
+}
+
+td {
+  border: 2px solid #000 !important;
+  padding: 10px !important;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #FFF9E6 !important;
+}
+
+tbody tr:hover {
+  background-color: #FFE66D !important;
+  transition: all 0.2s;
+}
+
+/* ============================================
+   IMAGES & FIGURES
+   ============================================ */
+
+img:not(.navbar-brand img):not([src*="logo"]) {
+  border: 4px solid #000 !important;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+figure {
+  text-align: center;
+}
+
+figcaption, .figure-caption {
+  font-family: 'Permanent Marker', cursive !important;
+  color: #E74C3C !important;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #FFE66D;
+  border: 2px solid #000;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+/* ============================================
+   LINKS
+   ============================================ */
+
+a:not(.navbar-brand):not(.nav-link):not(.btn) {
+  color: #3498DB !important;
+  text-decoration: none !important;
+  font-weight: bold;
+  border-bottom: 2px solid #3498DB;
+  transition: all 0.2s;
+}
+
+a:not(.navbar-brand):not(.nav-link):not(.btn):hover {
+  color: #E74C3C !important;
+  border-bottom: 2px solid #E74C3C;
+  background-color: #FFE66D;
+  padding: 2px 4px;
+}
+
+/* ============================================
+   TABLE OF CONTENTS / SIDEBAR
+   ============================================ */
+
+.sidebar, #toc {
+  background: linear-gradient(135deg, #A8E6CF 0%, #FFD93D 100%) !important;
+  border: 4px solid #000 !important;
+  padding: 1.5rem !important;
+  border-radius: 10px !important;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  font-family: 'Comic Neue', cursive !important;
+  font-weight: bold;
+}
+
+.sidebar a, #toc a {
+  border-bottom: none !important;
+  color: #2C3E50 !important;
+}
+
+.sidebar a:hover, #toc a:hover {
+  color: #E74C3C !important;
+  background-color: transparent !important;
+}
+
+/* ============================================
+   CALLOUT BOXES
+   ============================================ */
+
+.callout, .alert, .bs-callout {
+  border: 4px solid #000 !important;
+  border-radius: 15px !important;
+  padding: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+  font-family: 'Comic Neue', cursive !important;
+}
+
+.callout-note, .alert-info {
+  background-color: #A8E6CF !important;
+  border-left: 8px solid #27AE60 !important;
+}
+
+.callout-warning, .alert-warning {
+  background-color: #FFE66D !important;
+  border-left: 8px solid #F39C12 !important;
+}
+
+.callout-important, .alert-danger {
+  background-color: #FF8B94 !important;
+  border-left: 8px solid #E74C3C !important;
+}
+
+.callout-tip, .alert-success {
+  background-color: #95E1D3 !important;
+  border-left: 8px solid #1ABC9C !important;
+}
+
+.callout-title, .alert-heading {
+  font-family: 'Bangers', cursive !important;
+  font-size: 1.4rem !important;
+  text-transform: uppercase;
+  color: #2C3E50 !important;
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   EMPHASIS
+   ============================================ */
+
+strong, b {
+  color: #E74C3C;
+}
+
+em, i {
+  color: #3498DB;
+}
+
+/* ============================================
+   HORIZONTAL RULES
+   ============================================ */
+
+hr {
+  border: none !important;
+  height: 4px !important;
+  background: repeating-linear-gradient(
+    90deg,
+    #000 0px,
+    #000 10px,
+    transparent 10px,
+    transparent 20px
+  ) !important;
+  margin: 2rem 0 !important;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer, .pkgdown-footer {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%) !important;
+  border-top: 4px solid #000 !important;
+  font-family: 'Comic Neue', cursive !important;
+  padding: 1.5rem !important;
+}
+
+/* ============================================
+   HOME PAGE SPECIFIC
+   ============================================ */
+
+.page-header {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 100%);
+  border: 5px solid #000;
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* Package badges */
+.badges {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* ============================================
+   REFERENCE PAGE
+   ============================================ */
+
+.ref-index {
+  font-family: 'Comic Neue', cursive !important;
+}
+
+.ref-index h2 {
+  background: linear-gradient(135deg, #4ECDC4 0%, #A8E6CF 100%);
+  padding: 0.8rem 1rem 0.8rem 30px;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+
+/* ============================================
+   ARTICLE / VIGNETTE SPECIFIC
+   ============================================ */
+
+article {
+  font-family: 'Comic Neue', cursive !important;
+  line-height: 1.7;
+}
+
+article p {
+  margin-bottom: 1.2rem;
+}
+
+/* Comic panel sections */
+.comic-panel {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFE66D 100%);
+  border: 4px solid #000;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.comic-panel::before {
+  content: "★";
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  font-size: 2rem;
+  color: #FFD93D;
+  text-shadow: 2px 2px 0px #000;
+}
+
+/* KAPOW! style elements */
+.comic-emphasis {
+  display: inline-block;
+  background: #FFD93D;
+  border: 3px solid #000;
+  padding: 5px 15px;
+  transform: rotate(-2deg);
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+  margin: 0 5px;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+main {
+  animation: pop-in 0.4s ease-out;
+}
+
+/* ============================================
+   LIST STYLING
+   ============================================ */
+
+ul li::marker {
+  color: #E74C3C;
+  font-weight: bold;
+}
+
+ol li::marker {
+  color: #3498DB;
+  font-weight: bold;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn {
+  font-family: 'Bangers', cursive !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 3px solid #000 !important;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%) !important;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #FFD93D 0%, #F39C12 100%) !important;
+  color: #000 !important;
+}

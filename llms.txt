@@ -1,0 +1,160 @@
+# calvinball
+
+> “The only permanent rule is that you can’t play it the same way
+> twice!” - Calvin
+
+**calvinball** provides a synthetic sports dataset inspired by
+Calvinball, the legendary game from Bill Watterson’s *Calvin and Hobbes*
+comic strip. The package is designed to be a fun, nostalgic dataset for
+teaching data exploration and EDA techniques.
+
+## Installation
+
+You can install the development version of calvinball from GitHub:
+
+``` r
+# install.packages("pak")
+pak::pak("blairj09/calvinball")
+```
+
+## Quick Start
+
+``` r
+library(calvinball)
+
+# Four datasets are available immediately
+head(cb_players)
+head(cb_games)
+
+# Generate fresh data with custom parameters
+my_league <- generate_calvinball_data(n_players = 20, n_teams = 4, n_seasons = 2)
+```
+
+## Datasets
+
+The package includes four pre-generated datasets:
+
+| Dataset           | Description                         | Rows |
+|-------------------|-------------------------------------|------|
+| `cb_players`      | Player roster with team assignments | 30   |
+| `cb_teams`        | Team information                    | 6    |
+| `cb_games`        | Game results across 3 seasons       | 150  |
+| `cb_player_stats` | Individual player game statistics   | 900  |
+
+## Calvinball Statistics
+
+The dataset includes wonderfully absurd performance metrics true to the
+spirit of Calvinball:
+
+| Metric                          | Description                               |
+|---------------------------------|-------------------------------------------|
+| `wickets_scored`                | Because why not cricket terminology?      |
+| `opposite_touchdowns`           | Can be negative!                          |
+| `time_reversal_bonus`           | For when you declare a time-reversal zone |
+| `mask_points`                   | Masks are mandatory equipment             |
+| `flag_captures`                 | The Calvinball flag is sacred             |
+| `invisible_zones_crossed`       | Only the truly skilled can navigate these |
+| `spontaneous_rule_declarations` | The heart of Calvinball strategy          |
+| `song_quality_score`            | Victory songs are judged harshly          |
+| `style_points`                  | Because *flair matters*                   |
+
+## Data Characteristics
+
+The data intentionally includes chaotic elements perfect for teaching
+EDA:
+
+- **Wild score distributions**: Scores range from negative values to
+  thousands
+- **Multiple scoring systems**: 8 different scoring types that change
+  game-to-game
+- **Ties are possible**: Just like in real Calvinball (the score is
+  still Q to 12!)
+- **Extreme outliers**: ~10% of games have scores in the thousands
+
+## Example Analysis
+
+``` r
+library(calvinball)
+library(dplyr)
+library(ggplot2)
+
+# Who has the most style points on average?
+cb_player_stats |>
+  group_by(player_id) |>
+  summarize(avg_style_points = mean(style_points)) |>
+  left_join(cb_players, by = "player_id") |>
+  arrange(desc(avg_style_points)) |>
+  head(5)
+
+# Score distribution
+cb_games |>
+  ggplot(aes(x = score_home)) +
+  geom_histogram(bins = 30) +
+  labs(title = "Home Team Score Distribution",
+       subtitle = "Chaos incarnate!")
+```
+
+## Vignettes
+
+For a comprehensive exploratory data analysis, see the vignette:
+
+``` r
+vignette("calvinball-eda", package = "calvinball")
+```
+
+## Generating Custom Data
+
+Use
+[`generate_calvinball_data()`](https://blairj09.github.io/calvinball/reference/generate_calvinball_data.md)
+to create fresh datasets with custom parameters:
+
+``` r
+# A smaller recreational league
+rec_league <- generate_calvinball_data(
+  n_players = 12,
+  n_teams = 3,
+  n_games = 10,
+  n_seasons = 1,
+  seed = 123  # For reproducibility (against the spirit of Calvinball!)
+)
+
+# Access the generated data
+rec_league$players
+rec_league$games
+rec_league$player_stats
+```
+
+## License
+
+MIT © James Blair
+
+------------------------------------------------------------------------
+
+# Package index
+
+## Datasets
+
+Pre-generated Calvinball League data
+
+- [`cb_players`](https://blairj09.github.io/calvinball/reference/cb_players.md)
+  : Calvinball League Players
+- [`cb_teams`](https://blairj09.github.io/calvinball/reference/cb_teams.md)
+  : Calvinball League Teams
+- [`cb_games`](https://blairj09.github.io/calvinball/reference/cb_games.md)
+  : Calvinball League Game Results
+- [`cb_player_stats`](https://blairj09.github.io/calvinball/reference/cb_player_stats.md)
+  : Calvinball Player Game Statistics
+
+## Data Generation
+
+Generate fresh Calvinball data
+
+- [`generate_calvinball_data()`](https://blairj09.github.io/calvinball/reference/generate_calvinball_data.md)
+  : Generate Fresh Calvinball League Data
+
+# Articles
+
+### All vignettes
+
+- [The Score is still Q to
+  12](https://blairj09.github.io/calvinball/articles/calvinball-eda.md):
